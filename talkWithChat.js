@@ -1,23 +1,21 @@
-const { apiKey, organization } = require('keys.js');
+const { apiKey, organization } = require('./keys.js');
 const { Configuration, OpenAIApi } = require('openai');
-
 
 // Initialize the Configuration and OpenAIApi instances
 const configuration = new Configuration({ apiKey, organization });
 const openai = new OpenAIApi(configuration);
 
 // Function to send a message to the ChatGPT API
-async function sendMessage(conversationId, parentMessageId, message) {
+async function sendMessage(message) {
+  console.log('message:', message);
   try {
     // Use the OpenAI library to call the ChatGPT API
     const response = await openai.createChatCompletion({
       model: 'gpt-3.5-turbo',
       messages: [
-        { role: 'system', content: 'You are a helpful assistant.' },
+        // { role: 'system', content: 'You are a helpful assistant.' },
         { role: 'user', content: message }
       ],
-      conversationId,
-      parentId: parentMessageId // Include the parentMessageId for continuity
     });
 
     // Extract and return the generated message from the API response
